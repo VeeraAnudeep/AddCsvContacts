@@ -11,4 +11,8 @@ import java.util.List;
 public interface MainView extends MVPBaseView<Presenter> {
 
     void showContacts(List<User> contact);
+
+    void showLoading();
+
+    void hideLoading();
 }

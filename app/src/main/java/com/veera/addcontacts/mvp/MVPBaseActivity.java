@@ -2,13 +2,14 @@ package com.veera.addcontacts.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import com.veera.addcontacts.marshmallowPermissions.ActivityManagePermission;
 
 
-public abstract class MVPBaseActivity<P extends MVPBasePresenter> extends AppCompatActivity implements MVPBaseView<P> {
+public abstract class MVPBaseActivity<P extends MVPBasePresenter> extends ActivityManagePermission implements MVPBaseView<P> {
 
-    private P presenter;
     boolean isDestroyed;
+    private P presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

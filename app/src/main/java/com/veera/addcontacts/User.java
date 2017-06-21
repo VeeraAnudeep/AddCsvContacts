@@ -9,6 +9,11 @@ public class User {
     private String phone;
     private boolean isSelected;
 
+    public User(String displayName, String phone, String photoUri) {
+        this.name = displayName;
+        this.phone = phone;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
