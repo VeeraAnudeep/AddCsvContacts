@@ -10,9 +10,11 @@ import java.util.List;
  */
 
 public class Presenter extends MVPBasePresenter<MainView> implements ContactListener {
+    private static boolean contactsAdded = false;
     private InputStream inputStream;
     private GetContacts getContacts;
     private AddContacts addContacts;
+
 
     public Presenter(InputStream inputStream, GetContacts getContacts, AddContacts addContacts) {
         this.inputStream = inputStream;
@@ -27,11 +29,14 @@ public class Presenter extends MVPBasePresenter<MainView> implements ContactList
 
     public void readCsv() {
         getView().showLoading();
-        CSVFile csvFile = new CSVFile(inputStream);
-        List<String[]> contacts = csvFile.read();
-        for (int i = 1; i < contacts.size(); i++) {
-            String[] contact = contacts.get(i);
-            addContacts.addContact(contact[1], contact[0]);
+        if (!contactsAdded) {
+            CSVFile csvFile = new CSVFile(inputStream);
+            List<String[]> contacts = csvFile.read();
+            for (int i = 1; i < contacts.size(); i++) {
+                String[] contact = contacts.get(i);
+                addContacts.addContact(contact[1], contact[0]);
+            }
+            contactsAdded = true;
         }
         getContacts();
     }
