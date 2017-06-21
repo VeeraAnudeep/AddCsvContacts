@@ -7,6 +7,15 @@ package com.veera.addcontacts;
 public class User {
     private String name;
     private String phone;
+    private boolean isSelected;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public String getName() {
         return name;

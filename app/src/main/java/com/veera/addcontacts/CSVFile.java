@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVFile {
-    InputStream inputStream;
+    private InputStream inputStream;
 
     public CSVFile(InputStream inputStream){
         this.inputStream = inputStream;
     }
 
-    public List read(){
+    public List<String[]> read(){
         List resultList = new ArrayList();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
