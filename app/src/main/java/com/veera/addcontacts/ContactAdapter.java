@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,11 +18,18 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
 
     private List<User> users;
+    private List<User> selectedContacts;
+    private SelectListener selectListener;
+
+    public ContactAdapter(SelectListener selectListener) {
+        selectedContacts = new ArrayList<>();
+        this.selectListener = selectListener;
+    }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_item, parent, false);
-        return new ContactViewHolder(view);
+        return new ContactViewHolder(view, selectListener);
     }
 
     @Override
@@ -28,7 +37,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         User user = users.get(position);
         holder.phone.setText(user.getPhone());
         holder.name.setText(user.getName());
-        holder.checkBox.setSelected(user.isSelected());
+        holder.checkBox.setChecked(user.isSelected());
     }
 
     public void setUsers(List<User> users) {
@@ -41,16 +50,34 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return users != null ? users.size() : 0;
     }
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
+    class ContactViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
         TextView name;
         TextView phone;
         CheckBox checkBox;
+        SelectListener selectListener;
 
-        public ContactViewHolder(View itemView) {
+        public ContactViewHolder(View itemView, SelectListener selectListener) {
             super(itemView);
+            this.selectListener = selectListener;
             name = (TextView) itemView.findViewById(R.id.name);
             phone = (TextView) itemView.findViewById(R.id.phone);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
+            checkBox.setOnCheckedChangeListener(this);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            User user = users.get(getAdapterPosition());
+            if (isChecked) {
+                if (!selectedContacts.contains(user)) {
+                    user.setSelected(true);
+                    selectedContacts.add(user);
+                }
+            } else {
+                user.setSelected(false);
+                selectedContacts.remove(user);
+            }
+            selectListener.onSelection(selectedContacts);
         }
     }
 }

@@ -36,9 +36,19 @@ public class Presenter extends MVPBasePresenter<MainView> implements ContactList
         getContacts();
     }
 
+    public void onSelection(List<User> selectedContacts) {
+        String selection = "";
+        for (User user : selectedContacts) {
+            selection = selection + user.getName() + ", ";
+        }
+        getView().showSelectedContacts(selection);
+    }
+
     @Override
     public void onContactFetch(List<User> contacts) {
-        getView().hideLoading();
-        getView().showContacts(contacts);
+        if (isViewAlive()) {
+            getView().hideLoading();
+            getView().showContacts(contacts);
+        }
     }
 }

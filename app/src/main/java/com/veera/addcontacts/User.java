@@ -12,6 +12,7 @@ public class User {
     public User(String displayName, String phone, String photoUri) {
         this.name = displayName;
         this.phone = phone;
+        this.isSelected = false;
     }
 
     public boolean isSelected() {

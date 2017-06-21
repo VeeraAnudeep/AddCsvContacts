@@ -5,10 +5,21 @@
     android:layout_height="match_parent"
     tools:context="com.veera.addcontacts.MainActivity">
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:lineSpacingMultiplier="1.2"
+        android:padding="8dp"
+        android:textColor="@color/colorAccent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText">
 
     </android.support.v7.widget.RecyclerView>
 

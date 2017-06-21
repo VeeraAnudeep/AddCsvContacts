@@ -15,4 +15,6 @@ public interface MainView extends MVPBaseView<Presenter> {
     void showLoading();
 
     void hideLoading();
+
+    void showSelectedContacts(String selection);
 }
